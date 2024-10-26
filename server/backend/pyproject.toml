@@ -9,6 +9,7 @@ packages = [{include = "creddie"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+fastapi = {extras = ["standard"], version = "^0.115.3"}
 
 
 [build-system]
