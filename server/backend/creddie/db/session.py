@@ -1,5 +1,5 @@
 from creddie.config import settings
-from sqlmodel import create_engine
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 
 
