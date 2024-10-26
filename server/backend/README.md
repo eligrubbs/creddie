@@ -10,3 +10,8 @@ Features:
 - [X] Start script to launch server v0.1.0
     - Hello World index route
     - test the index route
+- [X] Alembic set up to connect to specified SQLite Database
+
+
+Future Features:
+- [ ] Connect to different types of Databases
