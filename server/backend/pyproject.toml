@@ -10,6 +10,9 @@ packages = [{include = "creddie"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = {extras = ["standard"], version = "^0.115.3"}
+pydantic-settings = "^2.6.0"
+sqlmodel = "^0.0.22"
+alembic = "^1.13.3"
 
 [tool.poetry.group.dev]
 optional = true
