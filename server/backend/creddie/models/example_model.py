@@ -5,11 +5,13 @@ This file and all mentions of this table will be deleted later.
 
 Copied from: https://sqlmodel.tiangolo.com/tutorial/fastapi/simple-hero-api/
 """
+from sqlalchemy import Column, String, Integer
+from . import Base
 
-from sqlmodel import Field, SQLModel
+class Hero(Base):
+    __tablename__ = "Heros"
 
-class Hero(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    name: str = Field(index=True)
-    secret_name: str
-    age: int | None = Field(default=None, index=True)
+    id = Column(Integer, default=None, primary_key=True)
+    name = Column(String, index=True)
+    secret_name = Column(String)
+    age = Column(Integer, default=None, index=True)
