@@ -14,5 +14,5 @@ app = FastAPI(
 
 
 @app.get("/")
-def index_route():
+async def index_route():
     return {"message": "Creddie says Hello!"}
