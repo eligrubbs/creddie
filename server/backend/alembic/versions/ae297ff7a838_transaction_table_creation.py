@@ -30,7 +30,7 @@ def upgrade() -> None:
     sa.Column('transaction_date', sa.TIMESTAMP(timezone=True), nullable=False),
     sa.Column('other_party', sa.String(length=64), nullable=False),
     sa.Column('transaction_description', sa.String(length=256), nullable=False),
-    sa.Column('category', sa.String(length=64), nullable=False),
+    sa.Column('category_id', sa.String(length=8), nullable=False),
     sa.Column('is_gift', sa.Boolean(), nullable=False),
     sa.Column('gift_party', sa.String(length=64), nullable=False),
     sa.Column('is_marketplace', sa.Boolean(), nullable=False),
