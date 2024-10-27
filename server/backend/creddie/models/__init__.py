@@ -12,3 +12,4 @@ class Base(DeclarativeBase):
 
 
 from .example_model import Hero
+from .transaction_model import Transaction
