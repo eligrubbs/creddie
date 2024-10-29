@@ -4,3 +4,5 @@ set -e
 # Let DB start
 python creddie/db/db_prestart.py
 
+# alembic migrations
+alembic upgrade head
