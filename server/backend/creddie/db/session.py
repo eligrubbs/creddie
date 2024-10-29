@@ -9,7 +9,7 @@ engine = create_engine(url = settings.get_db_uri_string(),
                        echo=settings.ECHO_DATABASE,
                     )
 
-SessionLocal = sessionmaker(
+SessionLocal: sessionmaker = sessionmaker(
     autocommit=False,
     autoflush=False,
     bind=engine,
