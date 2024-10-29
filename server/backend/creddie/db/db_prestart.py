@@ -24,9 +24,9 @@ wait_seconds_search = 1
 async def init_db() -> None:
     """Wait for database to wake up."""
     try:
-        with SessionLocal.session() as session:
+        with SessionLocal() as session:
             # Try to create session to check if DB is awake
-            await session.execute(text("SELECT 1"))
+            session.execute(text("SELECT 1"))
     except Exception as e:
         logger.error(e)
         raise e
