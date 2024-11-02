@@ -9,11 +9,6 @@ class CreateCategory(BaseModel):
     name: CatNameType
 
 
-class DeleteCategory(BaseModel):
-    """Info required to delete a category."""
-    id: UUIDType
-
-
 class ReadCategory(BaseModel):
     """Fields returned when reading a BaseModel.
     
