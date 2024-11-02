@@ -18,13 +18,18 @@ class ReadCategory(BaseModel):
     
     This Schema should represent all the fields.
     """
-    id = UUIDType
-    updated_date = AwareDatetime
-    created_date = AwareDatetime
+    id: UUIDType
+    updated_date: AwareDatetime
+    created_date: AwareDatetime
 
-    name = CatNameType
+    name: CatNameType
 
 
 class UpdateCategory(BaseModel):
-    """Fields able to be updated."""
-    name = CatNameType
+    """Fields able to be updated.
+
+    """
+
+    model_config: ConfigDict = {"extra": "forbid"}
+
+    name: CatNameType
