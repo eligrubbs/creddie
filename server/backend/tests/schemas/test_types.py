@@ -9,20 +9,20 @@ from creddie.consts import CATEGORY_MAX_NAME_LEN
 
 # UUID
 def test_create_uuid_type():
-    bob = UUIDType("OOOOO452")
-    bob = UUIDType("12345678")
+    UUIDType("OOOOO452")
+    UUIDType("12345678")
 
 def test_catches_bad_create_uuid_type():
     with pytest.raises(Exception):
-        bob = UUIDType("badUUID")
+        UUIDType("badUUID")
     with pytest.raises(Exception):
-        bob = UUIDType("TOOLONG22")
+        UUIDType("TOOLONG22")
     with pytest.raises(Exception):
-        bob = UUIDType("SHORT")
+        UUIDType("SHORT")
     with pytest.raises(Exception):
-        bob = UUIDType("BADCHAR!")
+        UUIDType("BADCHAR!")
     with pytest.raises(Exception):
-        bob = UUIDType("")
+        UUIDType("")
 
 def test_uuid_works_pydantic_model():
     class Dumb(BaseModel):
@@ -95,7 +95,7 @@ def test_party_pydantic_model_error():
 
 # Transaction Currency
 def test_create_currency_name():
-    assert CurrencyType("CURR")
+    CurrencyType("CURR")
     CurrencyType("BLB") # 
     CurrencyType("IU")
     CurrencyType("U")
