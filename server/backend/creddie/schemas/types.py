@@ -7,7 +7,13 @@ from typing import Any, Type, Generic, TypeVar
 from pydantic_core import core_schema
 from pydantic import GetCoreSchemaHandler, PositiveInt
 
-from ..consts import UUID_MAX_LEN, CHARS_FOR_UUID, CATEGORY_MAX_NAME_LEN
+from ..consts import (
+    UUID_MAX_LEN,
+    CHARS_FOR_UUID,
+    CATEGORY_MAX_NAME_LEN,
+    TBL_MAX_PARTY_LEN,
+    TBL_MAX_CURRENCY_LEN
+)
 
 
 T = TypeVar("T", bound=Any)
@@ -65,8 +71,8 @@ class AbstractStrictPydanticType(Generic[T]):
 
 
 class UUIDType(AbstractStrictPydanticType[str]):
-    """
-    UUID extended Pydantic type that will fail on instatiation if incorrect.
+    """UUID extended Pydantic type.
+    That will fail on instatiation if incorrect.
 
     Rules are:
     1. length == `UUID_MAX_LEN`
@@ -81,8 +87,7 @@ class UUIDType(AbstractStrictPydanticType[str]):
 
 
 class CatNameType(AbstractStrictPydanticType[str]):
-    """
-    Category Name Type.
+    """Category Name extended Pydantic type.
 
     Rules are:
     1. length <= `CATEGORY_MAX_NAME_LEN`
@@ -95,3 +100,38 @@ class CatNameType(AbstractStrictPydanticType[str]):
         assert len(name) > 0
         assert not name.isspace()
         return name
+
+
+class PartyType(AbstractStrictPydanticType[str]):
+    """Transaction Party extended Pydantic type.
+    Length CAN be Zero.
+
+    Rules are:
+    1. length <= `TBL_MAX_PARTY_LEN`
+    2. Is not just whitespace 
+    """
+    @classmethod
+    def validate(cls, party: str):
+        assert len(party) <= TBL_MAX_PARTY_LEN
+        assert not party.isspace()
+        return party
+
+
+class CurrencyType(AbstractStrictPydanticType[str]):
+    """Transaction Party extended Pydantic type.
+
+    Rules are:
+    1. length <= `TBL_MAX_CURRENCY_LEN`
+    2. length > 0
+    3. Is not just whitespace
+    4. only alphabetical characters
+    5. must be uppercase
+    """
+    @classmethod
+    def validate(cls, curr: str):
+        assert len(curr) <= TBL_MAX_CURRENCY_LEN
+        assert len(curr) > 0
+        assert not curr.isspace()
+        assert curr.isalpha()
+        assert curr == curr.upper()
+        return curr

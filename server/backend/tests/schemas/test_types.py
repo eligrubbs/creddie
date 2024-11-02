@@ -4,7 +4,7 @@ Test custom Pydantic types.
 import pytest
 from pydantic import BaseModel
 
-from creddie.schemas.types import UUIDType, CatNameType
+from creddie.schemas.types import UUIDType, CatNameType, PartyType, CurrencyType
 from creddie.consts import CATEGORY_MAX_NAME_LEN
 
 # UUID
@@ -62,5 +62,65 @@ def test_category_works_pydantic_model():
 def test_category_pydantic_model_error():
     class Dumb(BaseModel):
         uuuu: CatNameType
+    with pytest.raises(Exception):
+        bob = Dumb(uuuu= "      ")
+
+
+# Transaction Party
+def test_create_party_name():
+    PartyType("party name")
+    PartyType("gggggggggggggggggggggggggggggggg") # 32
+    PartyType("@#%$#W")
+    PartyType("")
+
+def test_catches_bad_party_create():
+    with pytest.raises(Exception):
+        PartyType("ggggggggggggggggggggggggggggggggg") # 33
+    with pytest.raises(Exception):
+        PartyType(" ")
+
+def test_party_works_pydantic_model():
+    class Dumb(BaseModel):
+        uuuu: PartyType
+    partyname = "I paid this person!!!"
+    bob = Dumb(uuuu=partyname)
+    assert {"uuuu": partyname} == bob.model_dump()
+
+def test_party_pydantic_model_error():
+    class Dumb(BaseModel):
+        uuuu: PartyType
+    with pytest.raises(Exception):
+        bob = Dumb(uuuu= "      ")
+
+
+# Transaction Currency
+def test_create_currency_name():
+    assert CurrencyType("CURR")
+    CurrencyType("BLB") # 
+    CurrencyType("IU")
+    CurrencyType("U")
+
+def test_catches_bad_currency_create():
+    with pytest.raises(Exception):
+        CurrencyType("GGGGG") # 5
+    with pytest.raises(Exception):
+        CurrencyType("")
+    with pytest.raises(Exception):
+        CurrencyType("USD!")
+    with pytest.raises(Exception):
+        CurrencyType("US D")
+    with pytest.raises(Exception):
+        CurrencyType("usd")
+
+def test_currency_works_pydantic_model():
+    class Dumb(BaseModel):
+        uuuu: CurrencyType
+    currencyname = "USD"
+    bob = Dumb(uuuu=currencyname)
+    assert {"uuuu": currencyname} == bob.model_dump()
+
+def test_currency_pydantic_model_error():
+    class Dumb(BaseModel):
+        uuuu: CurrencyType
     with pytest.raises(Exception):
         bob = Dumb(uuuu= "      ")
