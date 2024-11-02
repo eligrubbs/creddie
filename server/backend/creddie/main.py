@@ -3,8 +3,8 @@
 """
 from fastapi import FastAPI
 
-# The version must be changed manually here.
-API_VERSION = "0.1.0"
+from .consts import API_VERSION
+
 
 app = FastAPI(
     version = API_VERSION,

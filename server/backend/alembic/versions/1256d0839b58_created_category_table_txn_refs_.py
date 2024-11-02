@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision: str = '1256d0839b58'
-down_revision: Union[str, None] = 'ae297ff7a838'
+down_revision: Union[str, None] = 'ca0b5484b1ea'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -27,7 +27,7 @@ def upgrade() -> None:
     sa.Column('name', sa.String(length=32), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('id'),
-    sa.ForeignKeyConstraint(["id"], ["transactions.category_id"]), # fk's need to be added in table definition for SQLite
+    sa.UniqueConstraint('name'),
     )
     # ### end Alembic commands ###
 

@@ -1,0 +1,1 @@
+from .utils import num_rows_in_tbl
