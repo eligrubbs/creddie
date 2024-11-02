@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.create_table('transactions',
     sa.Column('id', sa.String(length=8), nullable=False),
     sa.Column('updated_date', sa.TIMESTAMP(timezone=True), nullable=False),
-    sa.Column('entry_date', sa.TIMESTAMP(timezone=True), nullable=False),
+    sa.Column('created_date', sa.TIMESTAMP(timezone=True), nullable=False),
     sa.Column('amount', sa.Numeric(scale=2), nullable=False),
     sa.Column('currency', sa.String(length=4), nullable=False),
     sa.Column('is_credit', sa.Boolean(), nullable=False),
