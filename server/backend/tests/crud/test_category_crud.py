@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 
 from creddie.schemas.category_schema import CreateCategory, UpdateCategory
 from creddie.models.category_model import TxnCategory
-from creddie.crud.category_crud import categories
+from creddie.crud import categories
 
 from ..utils import num_rows_in_tbl
 from ..utils.models import (
