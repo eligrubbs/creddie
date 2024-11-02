@@ -1,4 +1,3 @@
-import pytest
 from sqlalchemy.orm import Session
 
 from creddie.schemas.category_schema import CreateCategory
@@ -12,9 +11,10 @@ def test_create_category(sess: Session):
     rows = num_rows_in_tbl(sess, TxnCategory)
 
     create_data = CreateCategory(name=random_category_name())
-    categories.create(sess, obj_in = create_data)
+    obj = categories.create(sess, obj_in = create_data)
 
     rows_after = num_rows_in_tbl(sess, TxnCategory)
-
     assert rows+1 == rows_after
+
+    #assert sess.get(TxnCategory, obj.id) == obj
 
