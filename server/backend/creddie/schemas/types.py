@@ -36,9 +36,6 @@ class AbstractStrictPydanticType(Generic[T]):
             assert obj >= 50
             return obj
 
-    works = GE(50)
-    errors = GE(49)
-
     class ExampleModel(BaseModel):
         my_num: GE50
     works = ExampleModel(my_num=55)
