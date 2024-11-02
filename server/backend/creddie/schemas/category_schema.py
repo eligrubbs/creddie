@@ -1,6 +1,7 @@
-from pydantic import BaseModel, AwareDatetime
+from pydantic import BaseModel, AwareDatetime, ConfigDict
 
 from .types import UUIDType, CatNameType
+from .metaclass import partial_model
 
 
 class CreateCategory(BaseModel):
@@ -25,6 +26,7 @@ class ReadCategory(BaseModel):
     name: CatNameType
 
 
+@partial_model
 class UpdateCategory(BaseModel):
     """Fields able to be updated.
 
