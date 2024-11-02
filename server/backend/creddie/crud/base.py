@@ -76,5 +76,4 @@ class CRUDBase(Generic[ModelType, PrimaryKeySchemaType, CreateSchemaType, Update
 
         sess.delete(obj_to_delete)
         sess.commit()
-        sess.refresh(obj_to_delete)
         return obj_to_delete
