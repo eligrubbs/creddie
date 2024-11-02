@@ -43,7 +43,7 @@ class CRUDBase(Generic[ModelType, PrimaryKeySchemaType, CreateSchemaType, Update
         sess.refresh(db_obj)
         return db_obj
 
-    def get(self, sess: Session, * key: PrimaryKeySchemaType) -> ModelType | None:
+    def get(self, sess: Session, *, key: PrimaryKeySchemaType) -> ModelType | None:
 
         if isinstance(key, BaseModel):
             key = key.model_dump()
