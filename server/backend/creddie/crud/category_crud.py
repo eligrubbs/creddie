@@ -25,7 +25,7 @@ class CategoryCRUD(CRUDBase[TxnCategory, UUIDType, CreateCategory, UpdateCategor
         return result.scalar_one_or_none()
 
     def get_all_names(self, sess: Session) -> set:
-        stmt = select(self.model.name).order_by(self.model.created_date)
+        stmt = select(self.model.name)
         result = sess.execute(stmt)
         return set(result.scalars().all())
         
