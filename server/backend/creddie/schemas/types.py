@@ -21,12 +21,17 @@ T = TypeVar("T", bound=Any)
 class AbstractStrictPydanticType(Generic[T]):
     """
     Custom pydantic type that validates on creation.
-    `validate` must be defined by children classes, or you will get an error.
+    `validate` function must be defined by children classes, or you will get an error.
 
-    Children classes are meant to be used as types. They are validated on creation so they can be
-    instantiated without having to add extra pydantic functions around it or add a wrapper BaseModel.
+    Children classes are meant to be used as types. They integrate with Pydantic `BaseModel`
+    to provide custom validation.
 
-    Example usage:
+    In addition, children classes can be instantiated directly, so reliable types can be passed around.
+    The internal object can be accessed via the `get` method. Validation occurs upon instantiation.
+
+    **NOTE**: a call to `get` must be issued when doing anything that will expect the true value contained in the class. 
+
+    Example usage in pydantic model:
     ```
     from pydantic import BaseModel, PositiveInt
 
@@ -40,6 +45,16 @@ class AbstractStrictPydanticType(Generic[T]):
         my_num: GE50
     works = ExampleModel(my_num=55)
     errors = ExampleModel(my_num=-100)
+    # Example to explain the NOTE above
+    works = ExampleModel(my_num=GE50(55).get())
+    errors = ExampleModel(my_num = GE50(55))
+    ```
+
+    Example usage as instantiated type:
+    ```
+    my_obj = GE50(500)
+    assert my_obj.get() == 500
+    will_error = GE50(49)
     ```
 
     see:  https://stackoverflow.com/a/77164254
@@ -61,6 +76,15 @@ class AbstractStrictPydanticType(Generic[T]):
     def validate(cls, obj_to_validate: Any):
         raise NotImplementedError
 
+    def __init__(self, obj):
+        self.obj = obj
+
+    def __str__(self):
+        return self.obj.__str__()
+
+    def get(self):
+        return self.obj
+
 
 ###############
 # Types Below
@@ -75,7 +99,6 @@ class UUIDType(AbstractStrictPydanticType[str]):
     1. length == `UUID_MAX_LEN`
     2. all characters appear in `CHARS_FOR_UUID`
     """
-
     @classmethod
     def validate(cls, uuid: str):
         assert len(uuid) == UUID_MAX_LEN
