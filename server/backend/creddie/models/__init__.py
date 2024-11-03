@@ -11,6 +11,5 @@ class Base(DeclarativeBase):
     pass
 
 
-from .example_model import Hero
 from .transaction_model import Transaction
 from .category_model import TxnCategory

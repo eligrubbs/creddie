@@ -36,7 +36,7 @@ def test_update_transaction(sess: Session):
 
     assert up_obj.id == txn_id
     assert up_obj.amount != old_amount
-    assert up_obj.amount == "20.20"
+    assert up_obj.amount == Decimal("20.20")
     assert up_obj.currency == "USD"
 
 def test_delete_transaction(sess: Session):

@@ -9,6 +9,7 @@ alembic downgrade base
 alembic upgrade head
 
 # Make sure dev dependencies are installed before running
-pytest
+# `|| true` ensures TestDB is always cleaned up regardless of pytest pass/fail
+pytest || true
 
 rm ./TestDB.db
