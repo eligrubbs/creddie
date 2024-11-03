@@ -17,12 +17,17 @@ class CategoryCRUD(CRUDBase[TxnCategory, UUIDType, CreateCategory, UpdateCategor
         super().__init__(*args, **kwargs)
 
 
-    def get_by_name(self, sess: Session, *, name: CatNameType | str):
+    def get_by_name(self, sess: Session, *, name: CatNameType | str) -> TxnCategory:
         if isinstance(name, str):
             name = CatNameType(name)
         get_stmt = select(self.model).where(getattr(self.model, "name") == name.get())
         result = sess.execute(get_stmt)
         return result.scalar_one_or_none()
+
+    def get_all_names(self, sess: Session) -> set:
+        stmt = select(self.model.name).order_by(self.model.created_date)
+        result = sess.execute(stmt)
+        return set(result.scalars().all())
         
 
 categories = CategoryCRUD(TxnCategory)
