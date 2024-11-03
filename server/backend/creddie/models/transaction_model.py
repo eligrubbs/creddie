@@ -14,7 +14,7 @@ class Transaction(Base):
     # Enriched
     id = Column(String(UUID_MAX_LEN), default=get_UUID, nullable=False, primary_key=True, unique=True)
     updated_date = Column(TIMESTAMP(timezone=True), default=utc_now, onupdate=utc_now, nullable=False)
-    entry_date = Column(TIMESTAMP(timezone=True), default=utc_now, nullable=False)
+    created_date = Column(TIMESTAMP(timezone=True), default=utc_now, nullable=False)
 
     # Required
     amount = Column(Numeric(scale=TBL_AMOUNT_DECIMAL_POINTS), nullable=False)
