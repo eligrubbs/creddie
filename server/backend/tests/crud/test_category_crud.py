@@ -69,4 +69,3 @@ def test_get_all_names(sess: Session):
         names.append(rdm_cat.name)
     db_names = categories.get_all_names(sess)
     assert set(names) == db_names
-
