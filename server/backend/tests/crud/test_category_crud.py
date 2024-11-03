@@ -1,6 +1,8 @@
+from sqlalchemy import delete
 from sqlalchemy.orm import Session
 
 from creddie.schemas.category_schema import CreateCategory, UpdateCategory
+from creddie.schemas.types import CatNameType
 from creddie.models.category_model import TxnCategory
 from creddie.crud import categories
 
@@ -48,3 +50,22 @@ def test_delete_category(sess: Session):
 
     assert rows == num_rows_in_tbl(sess, TxnCategory) + 1
     assert deleted_cat == rdm_cat
+
+def test_get_by_name(sess: Session):
+    rdm_cat = create_random_category(sess)
+    rdm_name = rdm_cat.name
+
+    obj = categories.get_by_name(sess, name=CatNameType(rdm_name))
+    assert obj.id == rdm_cat.id
+    obj2 = categories.get_by_name(sess, name=rdm_name)
+    assert obj2.id == rdm_cat.id
+
+def test_get_all_names(sess: Session):
+    # Remove all categories from previous tests
+    sess.execute(delete(TxnCategory))
+    names = []
+    for _ in range(5):
+        rdm_cat = create_random_category(sess)
+        names.append(rdm_cat.name)
+    db_names = categories.get_all_names(sess)
+    assert set(names) == db_names

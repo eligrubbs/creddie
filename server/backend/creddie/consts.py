@@ -15,6 +15,10 @@ CHARS_FOR_UUID = string.ascii_uppercase + string.digits
 
 # Category Table
 CATEGORY_MAX_NAME_LEN=32
+INITIAL_CATEGORIES=[
+    "Dining", "Groceries", "Shopping", "Home Spending", "Transit", "Entertainment",
+    "Bills", "Fees", "Gifts", "Health", "Work", "Travel", "Income"
+]
 
 #Transaction Table
 TBL_MAX_PARTY_LEN=32
