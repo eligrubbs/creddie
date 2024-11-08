@@ -5,7 +5,7 @@ Written here for reuse among many schemas.
 from typing import Any, Type, Generic, TypeVar
 
 from pydantic_core import core_schema
-from pydantic import GetCoreSchemaHandler, PositiveInt
+from pydantic import GetCoreSchemaHandler
 
 from ..consts import (
     UUID_MAX_LEN,
@@ -38,7 +38,8 @@ class AbstractStrictPydanticType(Generic[T]):
     class GE50(AbstractStrictPydanticType[PositiveInt]):
         @classmethod
         def validate(cls, obj: PositiveInt):
-            assert obj >= 50
+            if obj < 50:
+                raise ValueError("value must be >= 50")
             return obj
 
     class ExampleModel(BaseModel):
@@ -116,9 +117,12 @@ class CatNameType(AbstractStrictPydanticType[str]):
     """
     @classmethod
     def validate(cls, name: str):
-        assert len(name) <= CATEGORY_MAX_NAME_LEN
-        assert len(name) > 0
-        assert not name.isspace()
+        if len(name) > CATEGORY_MAX_NAME_LEN:
+            raise ValueError(f"Category name should be <= {CATEGORY_MAX_NAME_LEN} chars long")
+        if len(name) <= 0:
+            raise ValueError(f"Category name should be > 0 chars long")
+        if name.isspace():
+            raise ValueError(f"Category name can't be only whitespace")
         return name
 
 
@@ -132,8 +136,10 @@ class PartyType(AbstractStrictPydanticType[str]):
     """
     @classmethod
     def validate(cls, party: str):
-        assert len(party) <= TBL_MAX_PARTY_LEN
-        assert not party.isspace()
+        if len(party) > TBL_MAX_PARTY_LEN:
+            raise ValueError(f"Party should be <= {TBL_MAX_PARTY_LEN} chars long")
+        if party.isspace():
+            raise ValueError(f"Party can't be only whitespace")
         return party
 
 
@@ -149,9 +155,14 @@ class CurrencyType(AbstractStrictPydanticType[str]):
     """
     @classmethod
     def validate(cls, curr: str):
-        assert len(curr) <= TBL_MAX_CURRENCY_LEN
-        assert len(curr) > 0
-        assert not curr.isspace()
-        assert curr.isalpha()
-        assert curr == curr.upper()
+        if len(curr) > TBL_MAX_CURRENCY_LEN:
+            raise ValueError(f"Currency must be <= {TBL_MAX_CURRENCY_LEN} chars long")
+        if len(curr) <= 0:
+            raise ValueError(f"Currency must be > 0 chars long")
+        if curr.isspace():
+            raise ValueError(f"Currency can't be only whitespace")
+        if not curr.isalpha():
+            raise ValueError(f"Currency must only contain alphabetical characters")
+        if curr != curr.upper():
+            raise ValueError(f"Currency must only contain capital letters")
         return curr
