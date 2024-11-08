@@ -3,7 +3,8 @@
 """
 from fastapi import FastAPI
 
-from .consts import API_VERSION
+from .api.v1.router import api_router
+from .consts import API_VERSION, API_V1_STR
 
 
 app = FastAPI(
@@ -16,3 +17,6 @@ app = FastAPI(
 @app.get("/")
 async def index_route():
     return {"message": "Creddie says Hello!"}
+
+
+app.include_router(api_router, prefix=API_V1_STR)
