@@ -8,6 +8,7 @@ import string
 
 # The version must be changed manually here.
 API_VERSION = "0.1.0"
+API_V1_STR = "/v1"
 
 # UUID
 UUID_MAX_LEN=8

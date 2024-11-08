@@ -4,7 +4,7 @@ from pydantic import AwareDatetime
 from creddie.schemas.types import PartyType, UUIDType
 from creddie.schemas.transaction_schema import CreateTransaction
 from creddie.models import TxnCategory, Transaction
-from creddie.utils.tools import get_UUID, utc_now
+from creddie.utils.tools import get_UUID, utc_now_naive
 
 # Category
 def random_category_name():
@@ -24,7 +24,7 @@ def random_transaction_info() -> CreateTransaction:
         "amount": 200.20,
         "currency": "USD",
         "is_credit": False,
-        "transaction_date": utc_now(),
+        "transaction_date": utc_now_naive(),
         "other_party": PartyType(f"Other Party {get_UUID()}").get(),
         "transaction_description": f"{get_UUID()*3}",
         "category_id": UUIDType(get_UUID()).get(),
