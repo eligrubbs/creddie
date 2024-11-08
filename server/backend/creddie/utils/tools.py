@@ -25,3 +25,9 @@ def utc_now() -> datetime:
     """
     tz_aware = datetime.now(timezone.utc)
     return tz_aware
+
+
+def utc_now_naive() -> datetime:
+    """Returns timezone naive datetime object that represents UTC now."""
+
+    return utc_now().replace(tzinfo=None)

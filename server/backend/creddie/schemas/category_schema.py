@@ -1,4 +1,4 @@
-from pydantic import BaseModel, AwareDatetime, ConfigDict
+from pydantic import BaseModel, NaiveDatetime, ConfigDict
 
 from .types import UUIDType, CatNameType
 from .metaclass import partial_model
@@ -15,8 +15,8 @@ class ReadCategory(BaseModel):
     This Schema should represent all the fields.
     """
     id: UUIDType
-    updated_date: AwareDatetime
-    created_date: AwareDatetime
+    updated_at: NaiveDatetime
+    created_at: NaiveDatetime
 
     name: CatNameType
 
