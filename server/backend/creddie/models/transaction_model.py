@@ -1,9 +1,9 @@
 """
 Transaction Data Model.
 """
-from sqlalchemy import Column, String, Numeric, Boolean, TIMESTAMP, ForeignKey
+from sqlalchemy import Column, String, Numeric, Boolean, DateTime, ForeignKey
 
-from ..utils.tools import get_UUID, utc_now
+from ..utils.tools import get_UUID, utc_now_naive
 from . import Base
 from .category_model import TxnCategory
 from ..consts import UUID_MAX_LEN, TBL_MAX_PARTY_LEN, TBL_MAX_CURRENCY_LEN, TBL_AMOUNT_DECIMAL_POINTS, TBL_MAX_DESC_LEN
@@ -13,14 +13,14 @@ class Transaction(Base):
 
     # Enriched
     id = Column(String(UUID_MAX_LEN), default=get_UUID, nullable=False, primary_key=True, unique=True)
-    updated_date = Column(TIMESTAMP(timezone=True), default=utc_now, onupdate=utc_now, nullable=False)
-    created_date = Column(TIMESTAMP(timezone=True), default=utc_now, nullable=False)
+    updated_at = Column(DateTime, default=utc_now_naive, onupdate=utc_now_naive, nullable=False)
+    created_at = Column(DateTime(timezone=True), default=utc_now_naive, nullable=False)
 
     # Required
     amount = Column(Numeric(scale=TBL_AMOUNT_DECIMAL_POINTS), nullable=False)
     currency = Column(String(TBL_MAX_CURRENCY_LEN), nullable=False)
     is_credit = Column(Boolean, nullable=False)
-    transaction_date = Column(TIMESTAMP(timezone=True), nullable=False)
+    transaction_date = Column(DateTime(timezone=True), nullable=False)
 
     other_party = Column(String(TBL_MAX_PARTY_LEN), nullable=False)
     transaction_description = Column(String(TBL_MAX_DESC_LEN), nullable=False)

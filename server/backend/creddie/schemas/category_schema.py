@@ -15,8 +15,8 @@ class ReadCategory(BaseModel):
     This Schema should represent all the fields.
     """
     id: UUIDType
-    updated_date: AwareDatetime
-    created_date: AwareDatetime
+    updated_at: AwareDatetime
+    created_at: AwareDatetime
 
     name: CatNameType
 

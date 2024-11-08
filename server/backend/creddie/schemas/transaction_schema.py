@@ -29,8 +29,8 @@ class CreateTransaction(BaseModel):
 class ReadTransaction(BaseModel):
     """Info returned when reading a transaction."""
     id: UUIDType
-    updated_date: AwareDatetime
-    created_date: AwareDatetime
+    updated_at: AwareDatetime
+    created_at: AwareDatetime
 
     amount: Annotated[Decimal, Field(decimal_places=2)]
     currency: CurrencyType
