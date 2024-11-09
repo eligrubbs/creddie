@@ -50,3 +50,14 @@ async def delete_category(id: UUIDType, sess: SessDep):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Category with id {id} not found")
 
     return del_obj
+
+
+@router.get("/all", response_model=list[ReadCategory], status_code=status.HTTP_200_OK)
+async def get_all_categories(sess: SessDep):
+    """Get a Category by it's ID."""
+    # got_obj = categories.get(sess, key=id)
+
+    # if not got_obj:
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Category with id {id} not found")
+    cats = list(categories.get_all(sess))
+    return cats
