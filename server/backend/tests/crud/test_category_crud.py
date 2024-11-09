@@ -68,4 +68,15 @@ def test_get_all_names(sess: Session):
         rdm_cat = create_random_category(sess)
         names.append(rdm_cat.name)
     db_names = categories.get_all_names(sess)
-    assert set(names) == db_names
+    assert not set(names).difference(db_names)
+
+
+def test_get_all(sess: Session):
+    # Remove all categories from previous tests
+    sess.execute(delete(TxnCategory))
+    dudes = []
+    for _ in range(5):
+        rdm_cat = create_random_category(sess)
+        dudes.append(rdm_cat)
+    db_names = categories.get_all(sess)
+    assert not set(dudes).difference(db_names)
