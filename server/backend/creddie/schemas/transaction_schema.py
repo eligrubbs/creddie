@@ -14,6 +14,7 @@ class CreateTransaction(BaseModel):
     currency: CurrencyType
     is_credit: bool
     transaction_date: NaiveDatetime
+    transaction_tz: str
 
     other_party: PartyType
     transaction_description: Annotated[str, Field(max_length=TBL_MAX_DESC_LEN)]
@@ -36,6 +37,7 @@ class ReadTransaction(BaseModel):
     currency: CurrencyType
     is_credit: bool
     transaction_date: NaiveDatetime
+    transaction_tz: str
 
     other_party: PartyType
     transaction_description: Annotated[str, Field(max_length=TBL_MAX_DESC_LEN)]
@@ -58,6 +60,7 @@ class UpdateTransaction(BaseModel):
     currency: CurrencyType
     is_credit: bool
     transaction_date: NaiveDatetime
+    transaction_tz: str
 
     other_party: PartyType
     transaction_description: Annotated[str, Field(max_length=TBL_MAX_DESC_LEN)]
