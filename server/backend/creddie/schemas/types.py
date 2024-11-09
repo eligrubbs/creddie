@@ -3,6 +3,7 @@
 Written here for reuse among many schemas.
 """
 from typing import Any, Type, Generic, TypeVar
+from zoneinfo import ZoneInfo
 
 from pydantic_core import core_schema
 from pydantic import GetCoreSchemaHandler
@@ -166,3 +167,22 @@ class CurrencyType(AbstractStrictPydanticType[str]):
         if curr != curr.upper():
             raise ValueError(f"Currency must only contain capital letters")
         return curr
+
+
+class TZType(AbstractStrictPydanticType[str]):
+    """Timezone name extended Pydantic Type.
+
+    Rules are:
+    1. Is a valid timezone key in an IANA Timezone Database
+    
+    The following should not raise an error:
+    ```
+    from zoneinfo import ZoneInfo
+    my_tz = "America/Los_Angeles"
+    no_err_zone = ZoneInfo(my_tz)
+    ```
+    """
+    @classmethod
+    def validate(cls, tz: str):
+        ZoneInfo(tz)
+        return tz
