@@ -5,6 +5,7 @@ from ....schemas.types import UUIDType
 from ....crud import categories
 from ....api.deps import SessDep
 
+
 router = APIRouter()
 
 @router.post("/", response_model=ReadCategory, status_code=status.HTTP_201_CREATED)
@@ -27,6 +28,7 @@ async def get_category_by_id(id: UUIDType, sess: SessDep):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Category with id {id} not found")
 
     return got_obj
+
 
 @router.put("/", response_model=ReadCategory, status_code=status.HTTP_200_OK)
 async def update_category(id: UUIDType, data: UpdateCategory,sess: SessDep):
@@ -55,9 +57,5 @@ async def delete_category(id: UUIDType, sess: SessDep):
 @router.get("/all", response_model=list[ReadCategory], status_code=status.HTTP_200_OK)
 async def get_all_categories(sess: SessDep):
     """Get a Category by it's ID."""
-    # got_obj = categories.get(sess, key=id)
 
-    # if not got_obj:
-    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Category with id {id} not found")
-    cats = list(categories.get_all(sess))
-    return cats
+    return categories.get_all(sess)
