@@ -28,6 +28,7 @@ def upgrade() -> None:
     sa.Column('currency', sa.String(length=4), nullable=False),
     sa.Column('is_credit', sa.Boolean(), nullable=False),
     sa.Column('transaction_date', sa.DateTime(), nullable=False),
+    sa.Column('transaction_tz', sa.String, nullable=False),
     sa.Column('other_party', sa.String(length=32), nullable=False),
     sa.Column('transaction_description', sa.String(length=256), nullable=False),
     sa.Column('category_id', sa.String(length=8), nullable=False),

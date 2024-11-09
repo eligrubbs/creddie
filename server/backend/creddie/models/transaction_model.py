@@ -21,6 +21,7 @@ class Transaction(Base):
     currency = Column(String(TBL_MAX_CURRENCY_LEN), nullable=False)
     is_credit = Column(Boolean, nullable=False)
     transaction_date = Column(DateTime, nullable=False)
+    transaction_tz = Column(String, nullable=False)
 
     other_party = Column(String(TBL_MAX_PARTY_LEN), nullable=False)
     transaction_description = Column(String(TBL_MAX_DESC_LEN), nullable=False)

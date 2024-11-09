@@ -4,8 +4,8 @@ Test custom Pydantic types.
 import pytest
 from pydantic import BaseModel
 
-from creddie.schemas.types import UUIDType, CatNameType, PartyType, CurrencyType
-from creddie.consts import CATEGORY_MAX_NAME_LEN
+from creddie.schemas.types import UUIDType, CatNameType, PartyType, CurrencyType, TZType
+
 
 # UUID
 def test_create_uuid_type():
@@ -122,5 +122,35 @@ def test_currency_works_pydantic_model():
 def test_currency_pydantic_model_error():
     class Dumb(BaseModel):
         uuuu: CurrencyType
+    with pytest.raises(Exception):
+        bob = Dumb(uuuu= "      ")
+
+
+# Timezone name
+def test_create_tz_name():
+    TZType("America/New_York")
+
+def test_catches_bad_tz_create():
+    with pytest.raises(Exception):
+        TZType("GGGGG") # 5
+    with pytest.raises(Exception):
+        TZType("")
+    with pytest.raises(Exception):
+        TZType("USD!")
+    with pytest.raises(Exception):
+        TZType("America/Los Angeles")
+    with pytest.raises(Exception):
+        TZType("usd")
+
+def test_tz_works_pydantic_model():
+    class Dumb(BaseModel):
+        uuuu: TZType
+    tzname = "America/Los_Angeles"
+    bob = Dumb(uuuu=tzname)
+    assert {"uuuu": tzname} == bob.model_dump()
+
+def test_tz_pydantic_model_error():
+    class Dumb(BaseModel):
+        uuuu: TZType
     with pytest.raises(Exception):
         bob = Dumb(uuuu= "      ")
