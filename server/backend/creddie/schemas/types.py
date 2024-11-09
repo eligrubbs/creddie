@@ -103,8 +103,10 @@ class UUIDType(AbstractStrictPydanticType[str]):
     """
     @classmethod
     def validate(cls, uuid: str):
-        assert len(uuid) == UUID_MAX_LEN
-        assert all([c in CHARS_FOR_UUID for c in uuid])
+        if len(uuid) != UUID_MAX_LEN:
+            raise ValueError(f"UUID must be {UUID_MAX_LEN} chars long")
+        if not all([c in CHARS_FOR_UUID for c in uuid]):
+            raise ValueError(f"'{uuid}' contains >=1 char(s) not in: {CHARS_FOR_UUID}")
         return uuid
 
 
@@ -115,6 +117,8 @@ class CatNameType(AbstractStrictPydanticType[str]):
     1. length <= `CATEGORY_MAX_NAME_LEN`
     2. length > 0
     3. Is not just whitespace
+    4. No leading or trailing whitespace
+
     """
     @classmethod
     def validate(cls, name: str):
@@ -124,6 +128,8 @@ class CatNameType(AbstractStrictPydanticType[str]):
             raise ValueError(f"Category name should be > 0 chars long")
         if name.isspace():
             raise ValueError(f"Category name can't be only whitespace")
+        if not name.strip() == name:
+            raise ValueError(f"Category name can't have leading/trailing whitespace")
         return name
 
 
@@ -134,6 +140,7 @@ class PartyType(AbstractStrictPydanticType[str]):
     Rules are:
     1. length <= `TBL_MAX_PARTY_LEN`
     2. Is not just whitespace 
+    3. No leading/trailing whitespace
     """
     @classmethod
     def validate(cls, party: str):
@@ -141,6 +148,8 @@ class PartyType(AbstractStrictPydanticType[str]):
             raise ValueError(f"Party should be <= {TBL_MAX_PARTY_LEN} chars long")
         if party.isspace():
             raise ValueError(f"Party can't be only whitespace")
+        if not party.strip() == party:
+            raise ValueError(f"Party can't have leading/trailing whitespace")
         return party
 
 
@@ -153,6 +162,7 @@ class CurrencyType(AbstractStrictPydanticType[str]):
     3. Is not just whitespace
     4. only alphabetical characters
     5. must be uppercase
+    6. No leading/trailing whitespace
     """
     @classmethod
     def validate(cls, curr: str):
@@ -166,6 +176,8 @@ class CurrencyType(AbstractStrictPydanticType[str]):
             raise ValueError(f"Currency must only contain alphabetical characters")
         if curr != curr.upper():
             raise ValueError(f"Currency must only contain capital letters")
+        if not curr.strip() == curr:
+            raise ValueError(f"Currency can't have leading/trailing whitespace")
         return curr
 
 

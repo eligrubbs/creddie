@@ -20,7 +20,7 @@ def test_catches_bad_create_uuid_type():
     with pytest.raises(Exception):
         UUIDType("SHORT")
     with pytest.raises(Exception):
-        UUIDType("BADCHAR!")
+        UUIDType("BADCHA !")
     with pytest.raises(Exception):
         UUIDType("")
 
@@ -51,6 +51,10 @@ def test_catches_bad_cat_create():
         CatNameType("ggggggggggggggggggggggggggggggggg") # 33
     with pytest.raises(Exception):
         CatNameType("         ")
+    with pytest.raises(Exception):
+        CatNameType("F         ")
+    with pytest.raises(Exception):
+        CatNameType("         F")
 
 def test_category_works_pydantic_model():
     class Dumb(BaseModel):
@@ -78,6 +82,10 @@ def test_catches_bad_party_create():
         PartyType("ggggggggggggggggggggggggggggggggg") # 33
     with pytest.raises(Exception):
         PartyType(" ")
+    with pytest.raises(Exception):
+        PartyType(" F")
+    with pytest.raises(Exception):
+        PartyType("F ")
 
 def test_party_works_pydantic_model():
     class Dumb(BaseModel):
@@ -111,6 +119,10 @@ def test_catches_bad_currency_create():
         CurrencyType("US D")
     with pytest.raises(Exception):
         CurrencyType("usd")
+    with pytest.raises(Exception):
+        CurrencyType(" USD")
+    with pytest.raises(Exception):
+        CurrencyType("USD ")
 
 def test_currency_works_pydantic_model():
     class Dumb(BaseModel):
