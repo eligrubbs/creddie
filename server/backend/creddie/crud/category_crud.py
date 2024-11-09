@@ -28,6 +28,11 @@ class CategoryCRUD(CRUDBase[TxnCategory, UUIDType, CreateCategory, UpdateCategor
         stmt = select(self.model.name)
         result = sess.execute(stmt)
         return set(result.scalars().all())
+
+    def get_all(self, sess: Session) -> list:
+        stmt = select(self.model)
+        result = sess.execute(stmt)
+        return result.scalars().all()
         
 
 categories = CategoryCRUD(TxnCategory)
