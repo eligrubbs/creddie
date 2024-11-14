@@ -11,6 +11,7 @@ router = APIRouter()
 
 @router.get("/")
 def get_form_html(req: Request):
+
     return templates.TemplateResponse(
         request=req, name="form.html", context = {}
     )

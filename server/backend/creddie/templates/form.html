@@ -1,10 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <meta charset="UTF-8">
+    <title>Creddie Form</title>
 </head>
 <body>
-    <p1>Form Dude.</p1>
+    <p1>Form Dude</p1>
+
+    <legend>Transaction Form</legend>
+    <form method="POST">
+        <div>
+            <label for="amountId">Amount</label>
+            <input type="text" name="amount" id="amountId" required>
+        </div>
+        <div>
+            <label for="currencyId">Currency</label>
+            <input type="text" name="currency" id="currencyId" required>
+        </div>
+        <div> <!-- CREATE CHECKBOX -->
+            <label for="iscreditId">Is Credit?</label>
+            <input type="text" name="iscredit" id="iscreditId" required>
+        </div>
+        <div>
+            <label for="txndateId">Transaction Date</label>
+            <input type="date" name="txndate" id="txndateId" required>
+        </div>
+        <div>
+            <label for="tzId">Timezone</label>
+            <input type="text" name="tz" id="tzId" required>
+        </div>
+        <div>
+            <label for="otherpartyId">Other Party</label>
+            <input type="text" name="otherparty" id="otherpartyId" required>
+        </div>
+        <div>
+            <label for="txndescId">Description</label>
+            <input type="text" name="txndesc" id="txndescId" required>
+        </div>
+        <div> <!-- CATEGORIES SHOULD BE SELECTION FROM NAMES -->
+            <label for="categoryId">Category </label>
+            <input type="text" name="category" id="categoryId" required>
+        </div>
+
+        <!-- Optional Below -->
+        <div>
+            <label for="isgiftId">Is Gift</label>
+            <input type="text" name="isgift" id="isgiftId">
+        </div>
+        <div>
+            <label for="giftpartyId">Gift Party</label>
+            <input type="text" name="giftparty" id="giftpartyId">
+        </div>
+
+        <div>
+            <label for="ismarketId">Is Marketplace</label>
+            <input type="text" name="ismarket" id="ismarketId">
+        </div>
+        <div>
+            <label for="marketpartyId">Marketplace Party</label>
+            <input type="text" name="marketparty" id="marketpartyId">
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // Get current date and time
+        var now = new Date();
+
+        var month = (now.getMonth()+1);
+        if (month < 10) { month = "0" + month; }
+        var day = now.getDate();
+        if (day < 10) { day = "0" + day; }
+
+        var datetime = now.getFullYear() +"-" + month + "-" + day;
+      
+        // Insert date and time into HTML
+        document.getElementById("txndateId").value = datetime;
+        document.getElementById("tzId").value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    </script>
 
 </body>
 </html>
