@@ -11,11 +11,11 @@
     <form method="POST">
         <div>
             <label for="amountId">Amount</label>
-            <input type="text" name="amount" id="amountId" required>
+            <input type="text" name="amount" id="amountId" pattern="^\d*(\.\d{0,2})?$" required>
         </div>
         <div>
             <label for="currencyId">Currency</label>
-            <input type="text" name="currency" id="currencyId" required>
+            <input type="text" name="currency" id="currencyId" pattern="^([a-zA-Z]{1,4})$" required>
         </div>
         <div> <!-- CREATE CHECKBOX -->
             <label for="iscreditId">Is Credit?</label>
