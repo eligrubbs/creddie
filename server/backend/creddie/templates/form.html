@@ -23,7 +23,7 @@
         </div>
         <div>
             <label for="txndateId">Transaction Date</label>
-            <input type="date" name="txndate" id="txndateId" required>
+            <input type="datetime-local" name="txndate" id="txndateId" required>
         </div>
         <div>
             <label for="tzId">Timezone</label>
@@ -39,7 +39,10 @@
         </div>
         <div> <!-- CATEGORIES SHOULD BE SELECTION FROM NAMES -->
             <label for="categoryId">Category </label>
-            <input type="text" name="category" id="categoryId" required>
+            <select name="category" id="categoryId" required>
+                <option value="" label="Select Category" disabled selected></option>
+            </select>
+
         </div>
 
         <!-- Optional Below -->
@@ -65,19 +68,44 @@
     </form>
 
     <script>
-        // Get current date and time
-        var now = new Date();
 
-        var month = (now.getMonth()+1);
-        if (month < 10) { month = "0" + month; }
-        var day = now.getDate();
-        if (day < 10) { day = "0" + day; }
+        async function SetDefaultItems() {
+            // Get current date and time
+            var now = new Date();
+            var month = (now.getMonth()+1);
+            if (month < 10) { month = "0" + month; }
+            var day = now.getDate();
+            if (day < 10) { day = "0" + day; }
+            var time = ('0'+now.getHours()).substr(-2) + ":" + ('0'+now.getMinutes()).substr(-2);
 
-        var datetime = now.getFullYear() +"-" + month + "-" + day;
-      
-        // Insert date and time into HTML
-        document.getElementById("txndateId").value = datetime;
-        document.getElementById("tzId").value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            var datetime = now.getFullYear() +"-" + month + "-" + day + "T" + time;
+
+            // Insert datetime and timezone into HTML
+            document.getElementById("txndateId").value = datetime;
+            document.getElementById("tzId").value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+            // Input 
+            try {
+                const response = await fetch("/v1/category/all");
+                if (!response.ok) {
+                    throw new Error(`Response Status: ${response.status}`)
+                }
+                const json = await response.json();
+
+                var cat_elem = document.getElementById("categoryId");
+                for (item of json) {
+                    var cat_node = document.createElement("option");
+                    cat_node.setAttribute("value", item.id);
+                    cat_node.setAttribute("label", item.name);
+                    cat_elem.appendChild(cat_node);
+                }
+            } catch (error) {
+                console.error(error.message);
+            }
+            
+        }
+        window.onload = SetDefaultItems;
+        
     </script>
 
 </body>
