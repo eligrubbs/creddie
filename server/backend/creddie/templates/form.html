@@ -88,7 +88,7 @@
             console.log(JSON.stringify(obj))
 
             // Send to Transaction ID
-            const url = new URL("/v1/category/",window.location.origin);
+            const url = new URL("/v1/transaction/",window.location.origin);
             fetch(url, {
                 method: "POST",
                 headers: {
