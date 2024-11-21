@@ -8,7 +8,7 @@
     <p1>Form Dude</p1>
 
     <legend>Transaction Form</legend>
-    <form method="POST">
+    <form method="POST" action="javascript:;" onsubmit="submitTransaction()">
         <div>
             <label for="amountId">Amount</label>
             <input type="text" name="amount" id="amountId" pattern="^\d*(\.\d{0,2})?$" required>
@@ -68,6 +68,43 @@
     </form>
 
     <script>
+        function submitTransaction() {
+            //var formData = JSON.stringify($("#myForm").serializeArray());
+            // Manual json_builder
+            const obj = {
+                "amount": document.getElementById("amountId").value,
+                "currency": String(document.getElementById("currencyId").value).toUpperCase(),
+                "is_credit": document.getElementById("iscreditId").checked,
+                "transaction_date": document.getElementById("txndateId").value,
+                "transaction_tz": document.getElementById("tzId").value,
+                "other_party": document.getElementById("otherpartyId").value,
+                "transaction_description": document.getElementById("txndescId").value,
+                "category_id": document.getElementById("categoryId").value,
+                "is_gift": document.getElementById("isgiftId").checked,
+                "gift_party": document.getElementById("giftpartyId").value,
+                "is_marketplace": document.getElementById("ismarketId").checked,
+                "marketplace_party": document.getElementById("marketpartyId").value,
+            }
+            console.log(JSON.stringify(obj))
+
+            // Send to Transaction ID
+            const url = new URL("/v1/transaction/",window.location.origin);
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "accept": "application/json",
+                },
+                body: JSON.stringify(obj)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+        }
 
         async function SetDefaultItems() {
             // Get current date and time
