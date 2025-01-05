@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "creddie-frontend"
+version = "0.1.0"
+description = "The frontend of Creddie."
+authors = ["Jakal02 <gitcontribs@eligrubbs.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "creddie_front"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {extras = ["standard"], version = "^0.115.6"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
