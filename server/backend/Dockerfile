@@ -1,7 +1,10 @@
 # Dockerize the backend
-FROM python:3.10
+FROM python:3.10-slim-bullseye
 
 WORKDIR /app/
+
+# Install curl to slim image
+RUN apt-get -y update && apt-get -y install curl
 
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python && \
