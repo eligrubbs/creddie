@@ -16,5 +16,13 @@ services:
     ports:
       - 8080:8080
 
+  frontend:
+    container_name: creddie_frontend
+    image: creddie-frontend:latest
+    build:
+      context: ./frontend
+    ports:
+      - 8081:8081
+
 volumes:
   myapp:
