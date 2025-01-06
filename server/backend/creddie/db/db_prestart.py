@@ -28,6 +28,8 @@ async def init_db() -> None:
             # Try to create session to check if DB is awake
             session.execute(text("SELECT 1"))
     except Exception as e:
+        from creddie.config import settings
+        logger.error(settings.get_db_uri_string())
         logger.error(e)
         raise e
 

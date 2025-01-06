@@ -5,9 +5,16 @@ services:
     image: creddie-backend:latest
     build:
       context: ./backend
+    volumes:
+      - type: bind
+        source: ${PATH_TO_DB}
+        target: /app/mnt
     env_file:
       - .env
-    environment: # Overwrite .env file which locally will have dev path
-      DATABASE_URI: "sqlite:///app/prodDB.db"
+    environment: # Overwrite .env file which locally will have path to dev db on your machine
+      DATABASE_URI: "sqlite:////app/mnt"
     ports:
       - 8080:8080
+
+volumes:
+  myapp:
