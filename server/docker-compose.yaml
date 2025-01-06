@@ -1,0 +1,13 @@
+
+services:
+  backend:
+    container_name: creddie_backend
+    image: creddie-backend:latest
+    build:
+      context: ./backend
+    env_file:
+      - .env
+    environment: # Overwrite .env file which locally will have dev path
+      DATABASE_URI: "sqlite:///app/prodDB.db"
+    ports:
+      - 8080:8080
