@@ -1,0 +1,19 @@
+[project]
+name = "creddie"
+version = "0.0.1"
+description = "Creddie: Your Financial Tracker"
+authors = [
+    { name = "eligrubbs", email = "gitcontribs@eligrubbs.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.115.8",
+    "pydantic-settings>=2.7.1",
+]
+
+[project.scripts]
+creddie = "creddie.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

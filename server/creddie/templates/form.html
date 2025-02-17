@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Creddie Form</title>
+</head>
+<body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <div id="flexForForm" style="display: flex; flex-direction: column; align-items: center;">
+        <div class="form-wrapper" style="max-width:60%;">
+            <legend>Transaction Form</legend>
+            <form method="POST" action="javascript:;" onsubmit="submitTransaction()">
+                <div id="AmountDescriptor" style="display: flex;" class="gap-2 mb-3">
+                    <!-- Amount -->
+                     <div class="input-group">
+                        <div class="input-group-text mb">
+                            $
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" name="amount" id="amountId" pattern="^\d*(\.\d{0,2})?$" required class="form-control" placeholder="">
+                            <label for="amountId">Amount</label>
+                        </div>
+                     </div>
+                    <!-- Currency -->
+                    <div class="form-floating">
+                        <input type="text" name="currency" id="currencyId" pattern="^([a-zA-Z]{1,4})$" required value="USD" class="form-control" placeholder="">
+                        <label for="currencyId">Currency</label>
+                    </div>
+                    <!-- Is Credit Indicator -->
+                    <div>
+                        <input type="checkbox" name="iscredit" id="iscreditId" class="btn-check" id="btn-check-outlined" checked autocomplete="off">
+                        <label class="btn btn-outline-success" for="iscreditId">
+                            <span style="display: inline-block;vertical-align: middle;line-height: normal;">Is Credit</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="txndateId">Transaction Date</label>
+                    <input class="form-select" type="datetime-local" name="txndate" id="txndateId" required>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <input type="text" name="tz" id="tzId" required class="form-control" placeholder="">
+                    <label for="tzId">Timezone</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <input type="text" name="otherparty" id="otherpartyId" required class="form-control" placeholder="">
+                    <label for="otherpartyId">Other Party</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <input type="text" name="txndesc" id="txndescId" required class="form-control" placeholder="">
+                    <label for="txndescId">Description</label>
+                </div>
+
+                <div class="input-group mb-3"> <!-- CATEGORIES ARE SELECTION FROM NAMES -->
+                    <label class="input-group-text" for="categoryId">Category</label>
+                    <select class="form-select" name="category" id="categoryId" required>
+                        <option value="" label="Select Category" disabled selected></option>
+                        {% for cat in categories %}
+                        <option value="{{cat}}" label="{{cat}}"></option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+                <!-- Optional Below -->
+                 <h5>Optional Fields</h5>
+                <div id="optionalWrapper" style="display: flex; flex-direction: column; max-width: 75%;">
+
+                    <div class="input-group mb-3">
+                        <!-- <div class="input-group-text">
+                          // <input class="form-check-input mt-0" type="checkbox" name="isgift" id="isgiftId" value="" aria-label="Check the box if transaction is a Gift.">
+                          <input type="checkbox" name="isgift" id="isgiftId" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                          <label class="btn btn-outline-success" for="isgiftId">Is Gift</label>
+                        </div> -->
+                        <input type="checkbox" name="isgift" id="isgiftId" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="isgiftId" style="border-top-left-radius: 0.5rem;border-bottom-left-radius: 0.5rem;align-content: center;">Is Gift</label>
+                        
+                        <div class="mb form-floating" style="flex-grow: 1;">
+                            <input type="text" name="giftparty" id="giftpartyId" class="form-control" placeholder="">
+                            <label for="giftpartyId">Gift Party</label>
+                        </div>
+                    </div>
+                      
+                    <div class="input-group mb-3">
+                        <input type="checkbox" name="ismarket" id="ismarketId" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="ismarketId" style="border-top-left-radius: 0.5rem;border-bottom-left-radius: 0.5rem;align-content: center;">Is Marketplace</label>
+                        
+
+                        <div class="mb form-floating" style="flex-grow: 1;">
+                            <input type="text" name="marketparty" id="marketpartyId" class="form-control" placeholder="Marketplace">
+                            <label for="marketpartyId">Marketplace Party</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="submitModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" id="modalHeader">
+                    <h5 class="modal-title" id="modalTitle">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalText">
+                    ...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal
+        var myModal = new bootstrap.Modal(document.getElementById('submitModal'), {keyboard: true, backdrop: true});
+
+        // Get contents of the URL
+        const urlParams = new URLSearchParams(window.location.search);
+
+        function submitTransaction() {
+            // Manual json_builder
+            const obj = {
+                "amount": document.getElementById("amountId").value,
+                "currency": String(document.getElementById("currencyId").value).toUpperCase(),
+                "is_credit": document.getElementById("iscreditId").checked,
+                "transaction_date": document.getElementById("txndateId").value,
+                "transaction_tz": document.getElementById("tzId").value,
+                "other_party": document.getElementById("otherpartyId").value,
+                "transaction_description": document.getElementById("txndescId").value,
+                "category": document.getElementById("categoryId").value,
+                "is_gift": document.getElementById("isgiftId").checked,
+                "gift_party": document.getElementById("giftpartyId").value,
+                "is_marketplace": document.getElementById("ismarketId").checked,
+                "marketplace_party": document.getElementById("marketpartyId").value,
+            }
+
+            // Log the Transaction
+            const url = new URL("http://localhost:8080/log_transaction?key="+urlParams.get("key"),window.location.origin);
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "accept": "application/json",
+                },
+                body: JSON.stringify(obj)
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    response.json().then(data => {
+                        myModal.show();
+                        document.getElementById("modalHeader").style.backgroundColor = "#198754";
+                        document.getElementById("modalHeader").style.color = "#fff";
+                        document.getElementById("modalTitle").innerText = "Success";
+                        document.getElementById("modalText").innerText = "Your Transaction was recorded successfully."
+
+                    })
+                } else {
+                    myModal.show();
+                    document.getElementById("modalHeader").style.backgroundColor = "#dc3545";
+                    document.getElementById("modalHeader").style.color = "#fff";
+                    document.getElementById("modalTitle").innerText = "Failure";
+                    response.json().then(b => {
+                        document.getElementById("modalText").innerText = "Your Transaction failed with the following error\n" + JSON.stringify(b, undefined, 2);
+                    })
+                }
+                
+            })
+            .catch(error => {
+                console.error(error);
+            })
+        }
+
+        async function SetDefaultItems() {
+            // Get current date and time
+            var now = new Date();
+            var month = (now.getMonth()+1);
+            if (month < 10) { month = "0" + month; }
+            var day = now.getDate();
+            if (day < 10) { day = "0" + day; }
+            var time = ('0'+now.getHours()).substr(-2) + ":" + ('0'+now.getMinutes()).substr(-2);
+
+            var datetime = now.getFullYear() +"-" + month + "-" + day + "T" + time;
+
+            // Insert datetime and timezone into HTML
+            document.getElementById("txndateId").value = datetime;
+            document.getElementById("tzId").value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        }
+        window.onload = SetDefaultItems;
+        
+    </script>
+
+</body>
+</html>
