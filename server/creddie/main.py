@@ -1,7 +1,7 @@
 import pathlib
 import os
 from fastapi import FastAPI, Request, HTTPException, status
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 
 from .config import settings
@@ -18,6 +18,12 @@ app = FastAPI(
     title = "Creddie",
     description = "Financial Tracker",
 )
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    the_path = creddie_dir / 'favicon.ico'
+    print(the_path)
+    return FileResponse(the_path)
 
 
 @app.get("/")

@@ -25,3 +25,9 @@ You can take a look at `example.env` for example variable values.
 ### Running
 
 Then simply run `start.sh` to start the server locally.
+
+
+
+#### Favicon Credit
+
+The favicon for creddie was sourced from [here](https://favicon.io/emoji-favicons/money-bag). And is licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
