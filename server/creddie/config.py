@@ -27,7 +27,7 @@ class APISettings(BaseSettings):
         str,
         Doc(
             """
-            Without this key, all GET requests to the form endpoint will result in 401 Unauthorized.
+            Without this key, all GET requests to the form or log_transaction endpoints will result in 401 Unauthorized.
             """
         )
     ]
