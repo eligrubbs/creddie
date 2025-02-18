@@ -10,8 +10,8 @@
 
     <div id="flexForForm" style="display: flex; flex-direction: column; align-items: center;">
         <div class="form-wrapper" style="max-width:60%;">
-            <legend>Transaction Form</legend>
-            <form method="POST" action="javascript:;" onsubmit="submitTransaction()">
+            <legend class="text-center">Creddie Transaction Form</legend>
+            <form method="POST" action="javascript:;" onsubmit="submitTransaction()" novalidate="" class="needs-validation">
                 <div id="AmountDescriptor" style="display: flex;" class="gap-2 mb-3">
                     <!-- Amount -->
                      <div class="input-group">
@@ -36,15 +36,16 @@
                         </label>
                     </div>
                 </div>
-
+                <!-- Date -->
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="txndateId">Transaction Date</label>
                     <input class="form-select" type="datetime-local" name="txndate" id="txndateId" required>
                 </div>
-
+                <!-- Time Zone -->
                 <div class="mb-3 form-floating">
                     <input type="text" name="tz" id="tzId" required class="form-control" placeholder="">
                     <label for="tzId">Timezone</label>
+                    <div class="invalid-feedback"> Not a valid IANA Timezone. </div>
                 </div>
 
                 <div class="mb-3 form-floating">
@@ -129,6 +130,15 @@
         const urlParams = new URLSearchParams(window.location.search);
 
         function submitTransaction() {
+            if (!Intl.supportedValuesOf("timeZone").includes(document.getElementById("tzId").value)) {
+                document.getElementById("tzId").classList.remove("is-valid");
+                document.getElementById("tzId").classList.add("is-invalid");
+                return;
+            } else {
+                document.getElementById("tzId").classList.add("is-valid");
+                document.getElementById("tzId").classList.remove("is-invalid");
+            }
+
             // Manual json_builder
             const obj = {
                 "amount": document.getElementById("amountId").value,
@@ -198,7 +208,7 @@
 
         }
         window.onload = SetDefaultItems;
-        
+        console.log(Intl.supportedValuesOf("timeZone"));
     </script>
 
 </body>
