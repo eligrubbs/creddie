@@ -3,3 +3,5 @@
 set -e
 
 docker compose down
+
+docker image prune -f
