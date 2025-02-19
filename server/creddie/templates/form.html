@@ -156,7 +156,7 @@
             }
 
             // Log the Transaction
-            const url = new URL("http://localhost:8080/log_transaction?key="+urlParams.get("key"),window.location.origin);
+            const url = new URL("/log_transaction?key="+urlParams.get("key"),window.location.origin);
             fetch(url, {
                 method: "POST",
                 headers: {
