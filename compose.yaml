@@ -1,0 +1,19 @@
+
+services:
+  api:
+    build:
+      context: ./server/
+
+    volumes:
+      - type: bind
+        source: $PWD/main.csv
+        # will change if the directory in Dockerfile where things are copied is changed
+        # or if the `PATH_TO_CSV_FILE` const is changed in `server/creddie/consts.py`
+        target: /app/data.csv
+
+    ports:
+      - "9000:8080"
+
+    environment:
+      PATH_TO_CSV_FILE: $PATH_TO_CSV_FILE
+      FORM_ACCESS_KEY: $FORM_ACCESS_KEY
