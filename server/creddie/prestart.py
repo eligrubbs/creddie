@@ -9,7 +9,7 @@ import pathlib
 import asyncio
 import logging
 
-from creddie.config import settings
+from creddie.consts import PATH_TO_CSV_FILE
 from creddie.schemas.transaction_schema import CreateTransaction
 
 logging.basicConfig(level=logging.INFO)
@@ -37,7 +37,7 @@ async def check_for_csv(the_path: pathlib.Path) -> None:
 
 async def main() -> None:
     """Entrypoint for startup task."""
-    the_path = settings.csv_abs_path()
+    the_path = PATH_TO_CSV_FILE
     logger.info(f"Scanning for csv at: {the_path}")
     await check_for_csv(the_path)
     logger.info(f"CSV ready for read/write at: {the_path}")

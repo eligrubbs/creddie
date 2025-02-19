@@ -1,0 +1,6 @@
+# excludes csv files that might be in here during testing
+*.csv
+
+# excludes environment
+.venv
+.env
