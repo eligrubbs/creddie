@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 
 from .config import settings
-from .consts import CATEGORIES
+from .consts import CATEGORIES, PATH_TO_CSV_FILE
 from .schemas.transaction_schema import CreateTransaction
 
 
@@ -34,9 +34,7 @@ async def index_route(req: Request) -> JSONResponse:
 
 @app.get("/form")
 async def form_route(req: Request, key: str):
-    if key != settings.FORM_ACCESS_KEY:
-        return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="You are not authorized to use this form")
-
+    # Allow all users to look at the form, but not all can submit to the form
     return templates.TemplateResponse(
         request=req, name="form.html", context = {"categories": CATEGORIES} 
     )
@@ -45,13 +43,13 @@ async def form_route(req: Request, key: str):
 @app.post("/log_transaction", response_model=CreateTransaction, status_code=status.HTTP_200_OK)
 async def log_transaction(req: CreateTransaction, key: str):
     if key != settings.FORM_ACCESS_KEY:
-        return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="You are not authorized to use this form")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="You are not authorized to use this form")
 
     data = req.model_dump()
-    with open(settings.csv_abs_path(), 'a') as csvfile:
+    with open(PATH_TO_CSV_FILE, 'a') as csvfile:
         writer = CreateTransaction.CSVDictWriter(f=csvfile)
         # for saftey, if the csv dissapears while still up, make a new one
-        if (os.stat(settings.csv_abs_path()).st_size == 0):
+        if (os.stat(PATH_TO_CSV_FILE).st_size == 0):
             writer.writeheader()
         writer.writerow(data)
     print(req.model_dump())
