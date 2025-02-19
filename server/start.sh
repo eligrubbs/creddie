@@ -3,10 +3,9 @@ set -e
 
 # prestart activities
 
-# From this line you see this script must be run from `server` directory 
-# as this is the root of the uv project and has (or will have after you run this)
-# the `.venv` directory of the project in it
-uv run python3 creddie/prestart.py
-# API startup
+# From this line you see this script must be run only when your terminal 
+# has the uv python environment activated, or your docker image has the same version of python as the project
+python3 creddie/prestart.py
 
-uv run uvicorn creddie.main:app --host 0.0.0.0 --port 8080
+# API startup
+uvicorn creddie.main:app --host 0.0.0.0 --port 8080
